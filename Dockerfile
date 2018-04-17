@@ -18,11 +18,9 @@ RUN \
 
 WORKDIR /var/www/html
 
-RUN wget http://www.datencockpit.at/release/datencockpitV0-2.tar.gz && tar -xzvf datencockpitV0-2.tar.gz
+RUN wget http://www.datencockpit.at/release/datencockpitV0-2.tar.gz && tar -xzvf datencockpitV0-2.tar.gz --strip-components=1
 
 ADD LocalSettings.php.template /var/www/html
 
-RUN envsubst '$DATENCOCKPIT_SITENAME $DATENCOCKPIT_URL $DATENCOCKPIT_EMERGENCY_CONTACT $DATENCOCKPIT_DB_HOST $DATENCOCKPIT_DB_NAME $DATENCOCKPIT_DB_USER $DATENCOCKPIT_DB_PASSWORD $HABIDAT_USER_NEXTCLOUD_DB_PASSWORD' < LocalSettings.php.template > /var/www/html/datencockpit/LocalSettings.php
-RUN mv /var/www/html/datencockpit/* /var/www/html
-RUN rm -r /var/www/html/datencockpit
+RUN envsubst '$DATENCOCKPIT_SITENAME $DATENCOCKPIT_URL $DATENCOCKPIT_EMERGENCY_CONTACT $DATENCOCKPIT_DB_HOST $DATENCOCKPIT_DB_NAME $DATENCOCKPIT_DB_USER $DATENCOCKPIT_DB_PASSWORD $HABIDAT_USER_NEXTCLOUD_DB_PASSWORD' < LocalSettings.php.template > LocalSettings.php
 

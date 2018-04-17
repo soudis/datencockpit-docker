@@ -1,11 +1,5 @@
 version: '3'
 
-networks:
-  habidat-proxy:
-    driver: bridge 
-  habidat-back:
-    driver: bridge  
-
 volumes:
   datencockpit-db:
   datencockpit-html:
@@ -23,8 +17,6 @@ services:
       - MYSQL_DATABASE=kdz_datencockpit
       - MYSQL_USER=kdz_datencockpit
       - MYSQL_PASSWORD=secretpassword # UNBEDINGT AUSTAUSCHEN
-    networks:
-      - habidat-back
     logging:
       options:
         max-size: 50m
@@ -38,7 +30,7 @@ services:
         DATENCOCKPIT_EMERGENCY_CONTACT: "apache@www.datencockpit.at"
         DATENCOCKPIT_DB_HOST: "db"
         DATENCOCKPIT_DB_NAME: "kdz_datencockpit"
-        DATENCOCKPIT_DB_USERNAME: "kdz_datencockpit"
+        DATENCOCKPIT_DB_USER: "kdz_datencockpit"
         DATENCOCKPIT_DB_PASSWORD: "secretpassword" # UNBEDINGT AUSTAUSCHEN
     restart: always
     volumes:
