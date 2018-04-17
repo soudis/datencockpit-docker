@@ -1,0 +1,54 @@
+version: '3'
+
+networks:
+  habidat-proxy:
+    driver: bridge 
+  habidat-back:
+    driver: bridge  
+
+volumes:
+  datencockpit-db:
+  datencockpit-html:
+
+services:  
+
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - datencockpit-db:/var/lib/mysql
+      - ./kdz_datencockpit.sql:/docker-entrypoint-initdb.d/kdz_datencockpit.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secretrootpassword # UNBEDINGT AUSTAUSCHEN
+      - MYSQL_DATABASE=kdz_datencockpit
+      - MYSQL_USER=kdz_datencockpit
+      - MYSQL_PASSWORD=secretpassword # UNBEDINGT AUSTAUSCHEN
+    networks:
+      - habidat-back
+    logging:
+      options:
+        max-size: 50m
+
+  datencockpit:
+    build: 
+      context: .
+      args:
+        DATENCOCKPIT_SITENAME: "Datencockpit"
+        DATENCOCKPIT_URL: "http://www.datencockpit.at"
+        DATENCOCKPIT_EMERGENCY_CONTACT: "apache@www.datencockpit.at"
+        DATENCOCKPIT_DB_HOST: "db"
+        DATENCOCKPIT_DB_NAME: "kdz_datencockpit"
+        DATENCOCKPIT_DB_USERNAME: "kdz_datencockpit"
+        DATENCOCKPIT_DB_PASSWORD: "secretpassword" # UNBEDINGT AUSTAUSCHEN
+    restart: always
+    volumes:
+      - datencockpit-html:/var/www/html
+    depends_on:
+      - db
+    links:
+      - db:db
+    ports:
+      - 80:80
+    logging:
+      options:
+        max-size: 50m
