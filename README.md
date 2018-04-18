@@ -8,3 +8,7 @@ Dockerversion von Datencockpit (www.datencockpit.at)
 3) docker-compose.yml.sample anpassen (Seitenname, DB Passwörter, URL, contact E-Mail) und als docker-compose.yml speichern
 4) docker-compose build
 5) docker-compose up -d
+
+warten bis Seite angezeigt wird (ein paar Minuten)
+
+6) docker-compose exec datencockpit ./update.sh
