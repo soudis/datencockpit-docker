@@ -23,7 +23,7 @@ WORKDIR /var/www/html
 
 USER www-data:www-data
 
-RUN wget https://github.com/krabina/Datencockpit/releases/download/1.0/datencockpit.tar.gz && tar -xzvf 1.0.tar.gz --strip-components=1
+RUN wget https://github.com/krabina/Datencockpit/releases/download/1.0/datencockpit.tar.gz && tar -xzvf datencockpit.tar.gz --strip-components=1
 
 ADD LocalSettings.php.template /var/www/html
 
